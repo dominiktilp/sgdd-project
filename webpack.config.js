@@ -8,11 +8,20 @@ module.exports = {
   entry: {
     "sgdd-app": ["./sgdd-app/index.js"],
     "default": ["./src/config/default/index.js"]
-  },
-
+  },  
   output: {
     path: path.join(__dirname, "build"),
     filename: "[name].entry.js"
+  },
+  devServer: {
+    port: 8080,
+    host: 'localhost',
+    historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    },
+    outputPath: path.join(__dirname, "build")
   },
 
   module: {
@@ -22,14 +31,14 @@ module.exports = {
         include: path.join(__dirname, 'sgdd-app'),
         loader: "babel-loader",
         query: {
-            presets: ['es2015', 'react']
+            presets: ['es2015', 'react', 'stage-0']
         }
       }, {
         test: /\.js$/,
         include: path.join(__dirname, 'src'),
         loader: "babel-loader",
         query: {
-            presets: ['es2015']
+            presets: ['es2015', 'react', 'stage-0']
         }
       }, {
         test: /\.styl/,
@@ -47,6 +56,5 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'src/', to: 'src/' },
     ])
-  ],
-  devtool: "cheap-source-map"
+  ]
 }

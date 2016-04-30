@@ -46,9 +46,19 @@ a.onreadystatechange = function() {
       }
       
       example.content = example.fullContent.replace(/(\/\/.*)\n/g, "");
-
+      var sgddExampleNode = document.getElementById("sgdd-example");
+      switch (example.type) {
+        case "html": {
+          sgddExampleNode.innerHTML = example.content;
+        }
+        case "jsx": {
+          var script = document.createElement("script");
+          script.type = "text/javascript";
+          script.innerHTML = example.content;
+          sgddExampleNode.parentNode.insertBefore(script, sgddExampleNode.nextSibling);
+        }
+      }
       
-      document.getElementById("sgdd-example").innerHTML = example.content;
       
     }
     else alert("HTTP error "+this.status+" "+this.statusText);
